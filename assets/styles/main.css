@@ -1,0 +1,35 @@
+/* Avoid elements wider than screen on mobile */
+img
+{
+    display: inline-block;
+    max-width: 100%;
+}
+
+pre, code, sample
+{
+    white-space: pre-wrap;
+    hyphens: none;
+}
+
+table
+{
+    max-width: 100%;
+}
+
+
+body
+{
+    max-width: 1000px;
+}
+
+
+/* Visual styling */
+
+pre
+{
+    background-color: #eaeaea;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
+
+code { background-color: #eaeaea }
