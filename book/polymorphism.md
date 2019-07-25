@@ -33,11 +33,12 @@ This is known as _parametric polymorphism_.
 
 There are two kinds of polymorphism in programming languages. The first kind, which is more
 popular, is called ad hoc polymorphism, and is also known as function/method/operator overloading.
-It is the ability to use two or more functions with the same name but different type and behaviour
-in the same program, for example, make `+` behave like addition for numbers but concatenation
-for strings. The majority of structured and object oriented languages implement it.
+Ad hoc polymorphism allows you to use two or more functions with the same name but different type and behaviour
+in the same program, for example, make `+` behave like addition for numbers and like concatenation
+for strings<span class="footnote">That is, `2 + 3 - 5`, `"foo" + "bar" = "foobar"`</span>.
+Many languages such as C++, Java, Scala, or Haskell implement it.
 
-Parametric polymorphism is ability to use the same function for values of any type. It is relatively
+Parametric polymorphism allows you to use the same function for values of any type. It is relatively
 more rare, but is gaining acceptance, for example in Scala and Swift, even though it's often not
 mentioned by name.
 
@@ -45,23 +46,22 @@ Some languages, such as Ada, Java, or C++ clearly recognize the issue and provid
 _generics_ or _templates_ that can be instantiated for different types. If you are familiar with them
 you can think of polymorphic functions as generics that need not be instantiated.
 
-Since OCaml doesn't support ad hoc polymorphism (it would require sacrificing the ability to
-write statically typed programs without any type annotations), hereafter the word _polymorphism_
-refers to parametric polymorphism.
+OCaml doesn't support ad hoc polymorphism, so the word _polymorphism_ in this books always
+refers to parametric polymorphism, unless specified otherwise.
 
-Just like generics in Ada or Java, parametric polymorphism is often used to implement collections
+Just like generics in Ada or Java, polymorphic types are often used to implement collections
 that work with items of any type, but prevent attempts to use items of different types in the same
 collection and thus preserve type safety. We will learn about polymorphic collections a bit later,
-after we learn about their building blocks—algebraic data types.
+after learning about their building blocks—algebraic data types.
 
 ### A note on notation
 
 A lot of time on the blackboard and in publications, people use small greek letters for type variables, such as
 &alpha;, &beta; etc. where actual source code uses `'a`, `'b` and so on.
 
-You can also see types of polymorphic written with universal quantifier: _&forall; &alpha; . &alpha; &rarr; &alpha;_.
-It is to emphasize that the type variable can be replaced with any type. That is, for any type &alpha; a function `f`
-can be specialized to it and become `int -> int`, or `string -> string`, or something else.
+You can also see types of polymorphic written with a universal quantifier: _&forall; &alpha; . &alpha; &rarr; &alpha;_.
+It emphasizes that the fact that a type variable can be replaced with any type. That is, for any type &alpha; such as `int` or `string`,
+a function `f` can be specialized to it and become `int -> int`, or `string -> string`, or something else.
 
 ## Higher order functions and combinators
 
@@ -82,13 +82,13 @@ to apply them to arguments of different types.
 Since we are not ready for polymorphic collections yet, we'll consider simpler but useful examples
 that require nothing but functions— _combinators_.
 
-A combinator, strictly speaking, is an expression that has no free variables. Loosely, that term is often used for any functions
+A combinator, strictly speaking, is an expression that has no free variables. That term is often loosely applied to functions
 that help you make new functions from existing ones.
 
 Let's examine two combinators from the standard library that can make your life easier: `@@` and `|>`.
 
 The `@@` operator (and remember, operators are functions) takes a function and some other value and applies the function to that value.
-Its practical use is to reduce the number of parentheses you need in your expressions. Compare these equivalent expressions:
+You can use it to reduce the number of parentheses you need in your expressions. Compare these equivalent expressions:
 
 ```
 let () = print_endline (string_of_int 5)
@@ -115,8 +115,7 @@ let () = print_endline @@ 5
 ```
 
 Another useful combinator is the reverse application combinator written `|>`. It is conceptually similar to the
-application combinator `@@`, but it differs in that it has a value on the left hand side and a function on the
-right hand side. It can be defined as:
+application combinator `@@`, but has a different order of arguments: a value on the left and a function on the right. It can be defined as:
 
 ```
 let (|>) x f = f x
