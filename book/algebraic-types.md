@@ -258,7 +258,7 @@ let area s =
   | Square s -> s ** 2.0
   | Triangle (s1, s2, s3) ->
     let s = (s1 +. s2 +. s3) /. 2.0 in
-    sqrt @@ s *. (s -. a) *. (s -. b) *. (s -. c)
+    sqrt @@ s *. (s -. s1) *. (s -. s2) *. (s -. s3)
 
 let () = Printf.printf "%f\n" @@ area (Triangle (3.0, 4.0, 5.0))
 ```
