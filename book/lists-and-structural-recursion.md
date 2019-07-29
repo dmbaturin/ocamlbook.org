@@ -252,11 +252,11 @@ until all inner expressions are evaluated. To make it tail recursive, we could u
 _structural recursion with accumulator_:
 
 ```
-let rec length xs =
-  let aux ys acc =
+let length xs =
+  let rec aux ys acc =
     match ys with
-      [] -> 0
-    | _ :: ys' -> length (acc + 1) ys'
+      [] -> acc
+    | _ :: ys' -> aux ys' (acc + 1)
   in aux xs 0
 ```
 
