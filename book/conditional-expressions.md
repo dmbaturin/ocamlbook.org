@@ -53,9 +53,9 @@ let () =
 
 Note that parentheses around the condition are optional and were added for readability.
 
-## No implicit convesion to `bool`
+## No implicit conversion to `bool`
 
-You should remember that there is no implicit converion to `bool` for any values.
+You should remember that there is no implicit conversion to `bool` for any values.
 The `<cond>` expression must be a `bool`.
 
 None of these conditional expressions are valid:
