@@ -83,8 +83,8 @@ let () = print_int (plus_two 3)
 This program will print 6 rather than 5 (i.e. 6 + 3, not 2 + 3). The reason is that functions capture bound variables from the scope
 where they were created—forever. This is called _lexical scoping_.
 
-The alternative approach would be _dynamic scoping_ where the value of `a` is be determined
-at the time when the `plus_two` function is applied. But in OCaml, values of bound variables
+The alternative approach would be _dynamic scoping_ where the value of `a` is taken from the scope
+where the `plus_two` function is applied. But in OCaml, values of bound variables
 are determined when functions are created, so we don't need to worry about it.
 
 We can rewrite the `plus_two` function using a `let ... in` binding instead:
@@ -164,8 +164,8 @@ let () = Printf.printf "%s\n" "hello world"
 
 ```
 
-When applied to a format string, that function will produce functions or one or more arguments depending
-on the format sting. For example, in `let f = Printf.printf "%s %d"`, `f` will be a function of type `string -> int -> unit`.
+When applied to a format string, that function will produce functions of one or more arguments depending
+on the format string. For example, in `let f = Printf.printf "%s %d"`, `f` will be a function of type `string -> int -> unit`.
 
 Now let's write a simple program using `Printf.printf` and partial application of it:
 
