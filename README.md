@@ -14,7 +14,7 @@ Everyone is welcome to contribute. Just create a pull request.
 
 ## Building
 
-This book uses [soupault](https://baturin.org/project/soupault) website generator.
+This book uses [soupault](https://soupault.neocities.org) website generator.
 You'll need the dev version now, some features are not yet in a release.
 
 For converting pages from Markdown to HTML it uses the `cmark` program.
