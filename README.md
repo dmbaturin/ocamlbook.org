@@ -18,3 +18,8 @@ This book uses [soupault](https://baturin.org/project/soupault) website generato
 You'll need the dev version now, some features are not yet in a release.
 
 For converting pages from Markdown to HTML it uses the `cmark` program.
+
+## Reading
+
+A draft more or less in sync with the repo lives at https://ocaml-book.baturin.org
+I should setup a CI for it eventually.
