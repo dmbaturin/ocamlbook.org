@@ -12,7 +12,7 @@ which would ruin the decidable type inference without any type annotations; or m
 arithmetics. The language designers sacrificed some convenience for consistency.
 
 The integer operators look as usual: `+`, `-`, `*`, `/`. The floating point operators have a dot at the end:
-`+.`, `-.`, `*`, `/.`.
+`+.`, `-.`, `*.`, `/.`.
 
 ```
 let a = 4 + 2 (* good *)
