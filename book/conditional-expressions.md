@@ -31,7 +31,7 @@ The syntax of the conditional expression is `if <cond> then <expr> else <expr>`.
 They are exactly expressions rather than statements, similar to the `<cond> ? <expr> : <expr>`
 construct in the C language family.
 
-Snce evaluation of expressions may produce side effects, nothing prevents us from using
+Since evaluation of expressions may produce side effects, nothing prevents us from using
 it in both &ldquo;expression&rdquo; and &ldquo;statement&rdquo; roles, where other languages may require conditional statements and condition expressions
 for different situations.
 
