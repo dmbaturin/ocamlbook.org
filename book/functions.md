@@ -41,9 +41,9 @@ any arguments), evaluate to themselves.
 ## Bindings, scopes, and closures
 
 Now let's examine how functions interact with other bindings. Unlike other expressions,
-functions contain _free variables_. A free variable is a variable not bound to any value.
+functions contain _free variables_. A free variable is a variable whose name is not bound to any value.
 
-In our `square` example, `x` is a free variable, and the expression in the right hand side
+In our `square` example, `x` is a free variable, and the expression in the right-hand side
 contains no other variables. When that function is applied to an argument, `x` will be replaced
 with that argument in the `x * x` expression and that expression will be evaluated.
 We can visualize that process like this:
@@ -63,29 +63,33 @@ let two = 2
 
 let plus_two = fun x -> x + two
 
-let number = plus_two 3 (* number = 5 *)
+let number = plus_two 10 (* number = 12 *)
 
 let () = print_int number
 ```
 
-However, what happens is the name `two` is shadowed by another binding? Let's try and see what happens:
+However, what happens if the name `two` is redefined after the definition of `plus_two`? Let's try and see what happens:
 
 ```
 let two = 2
 
-let plus_two = fun x -> x + a
+let plus_two = fun x -> x + two
 
 let two = 3
 
-let () = print_int (plus_two 3)
+let () = print_int (plus_two 10)
 ```
 
-This program will print 6 rather than 5 (i.e. 6 + 3, not 2 + 3). The reason is that functions capture bound variables from the scope
-where they were created—forever. This is called _lexical scoping_.
+This program will print 12 rather than 13 (i.e. 10 + 2, not 10 + 3).
 
-The alternative approach would be _dynamic scoping_ where the value of `a` is taken from the scope
-where the `plus_two` function is applied. But in OCaml, values of bound variables
-are determined when functions are created, so we don't need to worry about it.
+The reason is that functions capture bound variables from the scope where they were created—forever. This is called _lexical scoping_.
+If the name `two` was bound to 2 at the time we defined `plus_two`, then `plus_two` will be `fun x -> x + 2`,
+even if we redefine the variable `two` later.
+
+Some languages use a different approach called _dynamic scoping_ where variable names are resolved
+when the function is evaluated, so redefining a variable retroactively changes the behaviour of all functions
+that use it. Dynamic scoping makes reusing variable names a risky thing to do. Since OCaml is lexically scoped,
+you can reuse variable names safely.
 
 We can rewrite the `plus_two` function using a `let ... in` binding instead:
 
@@ -119,21 +123,19 @@ Let's write a function for calculating the average of two values.
 let average = fun x -> (fun y -> (x +. y) /. 2.0)
 ```
 
-As we can see, when applied to one argument, this function creates another function,
-where `x` is bound to the argument—a closure.
+Its type is `float -> (float -> float)`. It means that when applied to one argument (like `average 2.0`),
+this function creates another function, where `x` is bound, but `y` is free—a closure.
+That new function can be applied to another argument to complete the computation.
 
 The expression `let f = average 3.0` will be equivalent to `let f = fun y -> (3.0 +. y) /. 2.0)`,
-because functions capture bound variables from the scope where they are created, as we discussed already.
+because functions capture bound variables from the scope where they are created.
+Then you can apply it to something else, like `(average 3.0) 4.0`.
 
-The function `f` is thus a function that calculates
-the average of 3.0 and another arbitrary number, and can be applied to another argument.
-We could avoid the intermediate binding and write it as `(average 3.0) 4.0` if we wanted
-the average of 3.0 and 4.0. The type of the `average` function is therefore `float -> (float -> float)`.
+We used parentheses in `float -> (float -> float)` and `(average 3.0) 4.0` for clarity, but in fact they are not needed.
 
-That's a lot of parentheses as you can see. To simplify it, OCaml and most other functional languages
-use a convention where arrows associate to the right. Therefore the type of the `average` function
-can be written `float -> float -> float`, and it is assumed to mean `float -> (float -> float)`.
-Likewise, you can apply it without any parentheses too: `let a = average 3.0 4.0`.
+OCaml and most other functional languages use a convention where arrows associate to the right.
+The type of the `average` function can be written `float -> float -> float`, and it's assumed to mean `float -> (float -> float)`.
+Likewise, you can apply that function without any parentheses: `let a = average 3.0 4.0`.
 
 The process of creating a function &ldquo;of multiple arguments&rdquo; from functions of one argument
 is called _currying_, after Haskell Curry who was already mentioned in the history section,
