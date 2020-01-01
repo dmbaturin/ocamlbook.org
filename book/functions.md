@@ -255,9 +255,9 @@ let c = (^) "hello " "world"
 You can also define your own operators like any other functions using the same parentheses syntax:
 
 ```
-let (^^) x y = x ^ x ^ y ^ y
+let (^.^) x y = x ^ x ^ y ^ y
 
-let s = "foo" ^^ "bar" (* foofoobarbar *)
+let s = "foo" ^.^ "bar" (* foofoobarbar *)
 
 ```
 
@@ -271,7 +271,8 @@ let a = ~* 2 (* 4 *)
 
 The first character of the operator name determines its associativity and precedence
 <span class="footnote">This system is rigid, but predictable, which is especially important
-when you import operators from a module.</span>.
+when you import operators from a module. You can find the precedence table in the
+<a href="https://caml.inria.fr/pub/docs/manual-ocaml/libref/Ocaml_operators.html">manual</a>.</span>.
 
 ## Named and optional arguments
 
