@@ -201,7 +201,7 @@ in practice it's important to consider not only its existence, but also its size
 Experimentally tested stack depth limit, checked on an x86-64 and ARMv6 GNU/Linux machines appears to be around 260 000
 for bytecode and around 520 000 for native executables. This is enough to safely use recusrive functions even for very
 large datastructures, and seriously reduces the benefits of aggressively optimizing recursive functions by
-rewriting them in tge tail recursive style unless they are intended to run forever or knowingly receive very large inputs.
+rewriting them in the tail recursive style unless they are intended to run forever or knowingly receive very large inputs.
 
 It is important to learn how to use tail recursion, but it's also important to know when you can get away with a simpler
 naively recursive definition.
