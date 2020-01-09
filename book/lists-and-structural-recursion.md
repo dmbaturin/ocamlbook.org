@@ -248,7 +248,7 @@ It's very easy to see that our `length` function is structurally recursive: ever
 `length` is applied to the tail of the original list, which is guaranteed to be smaller than the original list.
 
 It's also easy to see that this implementation is not tail recursive, since the outermost `1 + (length xs')` expression cannot be evaluated
-until all inner expressions are evaluated. To make it tail recursive, we could use a variant of structural recusrion sometimes called
+until all inner expressions are evaluated. To make it tail recursive, we could use a variant of structural recursion sometimes called
 _structural recursion with accumulator_:
 
 ```
