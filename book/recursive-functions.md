@@ -1,12 +1,27 @@
 # Recursive functions
 
-A recursive definition is a definition that refers to itself. Recursive functions are
-very widely used in functional languages, not only for processing data that is inherently
-nested, such as directories in a file system., They are also control structures that play the same role
-as iteration in imperative languages.
+A recursive definition is a definition that refers to itself. It's often said,
+that a recursive function is a function that _calls itself_, which
+implies that, at the machine level, some memory (specifically, stack space) is used for a function call.
 
-Let's write a function that calculates a factorial of an integer number following
-this definition: 0! is 1, and factorial of a number _n_ greater than zero
+In imperative languages, recursive functions are often discouraged, and people
+use them only for tasks that don't have non-recursive solutions, like traversing
+directory trees.
+
+Performance and memory consumption is a valid concern if an expression  like `f(f(f(x)))`
+always takes three times as much memory as `f(x)`.
+
+In functional languages like OCaml, Haskell, or Scheme, it's not always the case
+and it's possible to use even _infinite_ recursion without running out of memory.
+
+That is why in functional languages recursion is used much more often, not only to deal
+with recursive data structures, but also as a control flow pattern that plays the same role
+as loops in imperative languages.
+
+## Recursive binding syntax
+
+Let's write a function that calculates the factorial of an integer number.
+The factorial of zero (written _0!_) is 1, and the factorial of a number _n_ greater than zero
 is _n * (n-1)!_.
 
 1. `0! = 1`
@@ -19,11 +34,10 @@ let rec factorial n =
   if n = 0 then 1
   else n * (factorial (n-1))
 ```
-
-Why the `rec` keyword is required? The compiler has its own reasons to have
-recursive functions explicitly marked as such, but for programmers it's not just
-a syntactic noise either, since it allows them to choose if they want to create
-a new recursive binding or shadow (redefine) an existing name.
+Notice the `rec` keyword. If you want to define a recursive function, you need to use
+`let rec` instead of just `let`. That's because OCaml allows you to choose whether
+you want the name `factorial` inside that definition to refer to the function itself,
+or redefine an older definition.
 
 Remember that in OCaml, functions are values,
 and function bindings are not different from variable bindings. Let's see what would
@@ -73,14 +87,15 @@ that all names must be already defined in the outer scope before they can be ref
 
 Sometimes you will want your function definitions to be _mutually recursive_, that is, refer
 to one another. Real life use cases for it often arise in data parsing and formatting, as well
-as many other fields. For example, in JSON, objects (dictionaries) may contain array and
+as many other fields. For example, JSON, objects (dictionaries) may contain arrays and
 vice versa, so if you are writing a JSON formatter, your functions for formatting objects
 and arrays will need to refer to each other.
 
 The problem with it in OCaml and many other statically typed languages is that all names
-must be defined in advance. Some languages use forward declarations to let
-you get around the issue. OCaml uses the `and` keyword, so mutually recursive definitions
-have the following form: `let rec <name1> = <expr> and <name2> = <expr>`.
+must be defined in advance. Some languages use forward declarations to get around that issue.
+
+OCaml allows you to explicitly declare bindings as mutually recursive using the `and` keyword.
+Such definitions follow this pattern: `let rec <name1> = <expr> and <name2> = <expr>`.
 
 Let's demonstrate it using a popular contrived example:
 
@@ -111,9 +126,9 @@ let rec factorial n =
   else n * (factorial (n-1))
 ```
 
-Since the `n * (factorial (n-1))` expression refers to `(factorial (n-1))`, it cannot be evaluated until
-the result of executing `(factorial (n-1))` is known, and `factorial 3` will produce four nested function calls
-in the executable code. With large arguments it take up a large amount of stack space, and eventually cause
+Since the expression  `n * (factorial (n-1))` refers to `(factorial (n-1))`, it cannot be evaluated until
+the result of executing `(factorial (n-1))` is known. Thus, `factorial 3` will produce four nested function calls
+in the executable code. With large arguments it will take up a large amount of stack space, and eventually cause
 a stack overflow. 
 
 Now consider this program:
@@ -125,11 +140,11 @@ let _ = loop ()
 ```
 
 If you compile and run it or paste it into the REPL, you will notice that it keeps
-printing `I'm a recursive function` forever without ever running into stack overflow.
+printing `I'm a recursive function` forever without ever causing a stack overflow.
 This is the usual way to write an endless loop in OCaml.
 
 How is it possible? If you look at the `loop` function body, you can see that it doesn't
-use the result of `loop ()` in any way. This means that it can be evaluated correctly
+use the result of `loop ()` in any way. This means it can be evaluated correctly
 without knowing the value of `loop ()` from the previous call.
 
 The OCaml compiler knows that, and produces executable code where `loop ()` is translated
@@ -208,12 +223,12 @@ naively recursive definition.
 
 ## Exercises
 
-Write a function that checks if given integer number is prime (i.e. has no divisors other than 1 and itself).
+1. Write a function that checks if given integer number is prime (i.e. has no divisors other than 1 and itself).
 
-Write a function that calculates the greatest common divisor of two integer numbers using the Euclides algorithm:
+2. Write a function that calculates the greatest common divisor of two integer numbers using the Euclides algorithm:
 gcd n 0 = n, gcd n m = gcd m, (n mod m). Do it in both naive and tail recursive style.
 
-Rewrite this function for multiplying non-zero numbers to be tail recursive:
+3. Consider this function for multiplying integer numbers: 
 
 ```
 let rec mul n m =
@@ -221,7 +236,9 @@ let rec mul n m =
   else n + (mul n (m-1))
 ```
 
-Verify that it is indeed tail recursive by using a value of _m_ greater than the call stack depth, e.g. `mul 2 600000`.
+Rewrite it in the tail-recursive style.
 
-Write a program using two functions that print "I'm a recursive function" and "I'm also a recursive function" respectively
-so that these two lines are printed in an infinite loop.
+4. Verify that it is indeed tail recursive by using a value of _m_ greater than the call stack depth, e.g. `mul 2 600000`.
+
+5. Write a program that keeps printing "I'm a recursive function" and "I'm also a recursive function",
+using separate functions for each of the messages.
