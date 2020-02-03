@@ -15,7 +15,7 @@ Record types cannot be anonymous, they must always be defined before use.
 Let's write an example program that deals with 2d vectors defined by their components (x and y):
 
 
-```
+```ocaml
 type vector = { x: float; y: float }
 
 let vec = {x=1; y=1}
@@ -43,7 +43,7 @@ This is called &ldquo;functional update&rdquo;. As we have seen in previous chap
 
 Functional update is done with `with` keyword:
 
-```
+```ocaml
 type contact = {name: string; phone: string}
 
 let person = {name="Boris"; phone="2128506"}
@@ -53,7 +53,7 @@ let person = {person with phone="212850A" }
 
 It's fine to update multiple fields at once as well:
 
-```
+```ocaml
 let person = {name="Boris"; phone="2128506"}
 
 let person = {person with name="Bob"; phone="212850B" }
@@ -62,7 +62,7 @@ let person = {person with name="Bob"; phone="212850B" }
 If you change every field of a record, the compiler will warn you about it:
 
 ```
-Warning 23: all the fields are explicitly listed in this record:                                                                                                        the 'with' clause is useless. 
+Warning 23: all the fields are explicitly listed in this record: the 'with' clause is useless. 
 ```
 
 ## Mutable fields and destructive updates
@@ -71,7 +71,7 @@ Most values in OCaml are immutable, but records is an exception to that rule: th
 
 Mutable fields are declared and updated using this syntax:
 
-```
+```ocaml
 type user = {name: string; mutable password: string}
 
 let user = {name="root"; password=""}
@@ -89,7 +89,7 @@ Creating a new record type every time you need a mutable variable would quickly 
 
 There's a type `'a ref` that is really a record with a single mutable field named &ldquo;contents&rdquo;. It comes with a function `ref : 'a -> 'a ref` that creates a new reference, and an assignment operator `:=`.
 
-```
+```ocaml
 type 'a ref = {mutable contents: 'a}
 
 let ref value = {contents: value}

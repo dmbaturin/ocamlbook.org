@@ -14,12 +14,19 @@ arithmetics. The language designers sacrificed some convenience for consistency.
 The integer operators look as usual: `+`, `-`, `*`, `/`. The floating point operators have a dot at the end:
 `+.`, `-.`, `*.`, `/.`.
 
-```
+Remember to always use dotted operators with floating point numbers, and write integer numbers with a dot at the end
+like `4.` (or use `4.0`)  to let the compiler know they are supposed to be floats:
+
+```ocaml
 let a = 4 + 2 (* good *)
 let b = 4.0 *. 3.5 (* good *)
 
 let c = (float 4) +. 2. (* good, integer is converted to float *)
+```
 
+Bad examples:
+
+```
 let d = 4.0 + 2.0 (* bad, using integer addition with floats *)
 let e = 4 +. 2 (* bad using floating point addition with integers *)
 let f = 4.0 + 2 (* bad, mixing floats with integers *)
@@ -28,7 +35,7 @@ let f = 4.0 + 2 (* bad, mixing floats with integers *)
 Now let's write a program that takes temperature in Celsius from the standard input
 and converts it to Kelvin.
 
-```
+```ocaml
 let celsius = read_float ()
 
 let kelvin = celsius +. 273.15

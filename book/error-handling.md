@@ -10,7 +10,7 @@ None of them is inherently superior to the other, and it's possible to mix them.
 It's common to indicate error conditions with option of result types. This is how they
 are defined in the standard library:
 
-```
+```ocaml
 type 'a option = None | Some of 'a
 
 type ('a, 'b) result = Ok of 'a | Error of 'b
@@ -31,7 +31,7 @@ Let's demonstrate it with `List.find_opt : ('a -> bool) -> 'a list -> 'a option`
 from the standard library that takes a function of type `'a -> bool` and checks if it's true
 for any element of a list until it finds one or the end of the list is reached:
 
-```
+```ocaml
 let xs = [1; 3; 5; 7]
 
 let () =
@@ -43,7 +43,7 @@ let () =
 
 If there can be different error conditions, it's better to use the result type:
 
-```
+```ocaml
 (* (//) : int -> int -> (int, string) result *)
 let (//) x y =
   if y = 0 then Error "Division by zero"
@@ -81,7 +81,7 @@ function only needs to know how to produce one, but not how to handle it.
 
 This is how it's implemented:
 
-```
+```ocaml
 let bind o f =
   match o with
   | None -> None
@@ -94,7 +94,7 @@ to the value attached to `Some`.
 For ease of use, the bind function is usually aliased to an infix operator, traditionally `>>=`.
 Let's rewrite our example using the `Option.bind`:
 
-```
+```ocaml
 let (>>=) = Option.bind
 
 let handle_search_result o =
@@ -111,7 +111,7 @@ let () =
 If we had multiple functions of type `'a -> 'a option`, we could write a much longer pipeline,
 and still have to deal with unwrapping the option type explicitly only at the last step:
 
-```
+```ocaml
 let y = x >>= f >>= g >>= h in
 match y with
 | None -> ...
@@ -140,7 +140,7 @@ Some functions exist in both pure and exception-raising variants. For example, a
 there's also `List.find : ('a -> bool) -> 'a list -> 'a` function that will raise `Not_found` exception
 if it failes to find anything:
 
-```
+```ocaml
 let () = 
   let x = List.find (fun x -> x mod 2 = 0) [1; 3; 5] in
   Printf.printf "%d\n" x
@@ -158,7 +158,7 @@ magic to allow raising and catching them.
 
 This is how you can define new exceptions:
 
-```
+```ocaml
 exception Access_denied
 
 exception Invalid_value of string
@@ -174,7 +174,7 @@ Built-in the division functions `/` and `/.` raise a `Division_by_zero` exceptio
 To learn how to raise an exception ourselves, we can reimplement a division function to raise our own exception.
 They are raised using the `raise : exn -> 'a` function:
 
-```
+```ocaml
 exception Invalid_value of string
 
 let (//) x y =
@@ -184,7 +184,7 @@ let (//) x y =
 
 Now let's learn how to catch exceptions:
 
-```
+```ocaml
 let () =
   try
     let x = 4 // 0 in
@@ -195,7 +195,7 @@ let () =
 Note that `try ... with` constructs are expressions rather than statements, and can be easily used
 inside `let`-bindings, for example to provide a default value in case an exception is raised:
 
-```
+```ocaml
 let x = try 4 / 0 with Division_by_zero -> 0 (* x = 0 *)
 
 let () = Printf.printf "%d\n" x
@@ -204,13 +204,13 @@ let () = Printf.printf "%d\n" x
 Another implication of the fact that `try ... with` is an expression is that all expressions in the
 `try` and `with` clauses must have the same type. This would cause a type error:
 
-```
+```ocaml
 let x = try 4 / 0 with Division_by_zero -> print_endline "Division by zero"
 ```
 
 You can catch multiple exceptions using a syntax similar to that of `match` expressions:
 
-```
+```ocaml
 let () =
   try
     let x = 4 // 0 in
@@ -227,7 +227,7 @@ we cannot catch a generic exception, but we can use the wildcard pattern to catc
 The downside of course is that if an exception comes with an attached value, we cannot destructure
 it and extract the value since the type of that value is not known in advance.
 
-```
+```ocaml
 let () =
   try
     let x = 4 // 0 in
@@ -242,7 +242,7 @@ let () =
 
 These are some exceptions that are commonly raised by standard library functions and you'll likely encounter them often:
 
-```
+```ocaml
 exception Not_found
 
 exception Failure of string

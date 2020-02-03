@@ -19,7 +19,7 @@ more parentheses.
 The standard library defines a number of list functions in the `List` module.
 The simplest is the `List.length : 'a list -> int` function that calculates list length:
 
-```
+```ocaml
 let l = List.length ["foo"; "bar"; "baz"] (* l = 3 *)
 ```
 
@@ -31,13 +31,13 @@ for searching, filtering, or transformation.
 For example, there is a `List.exists : 'a list -> ('a -> bool) -> bool` function that checks if
 an element matching some condition exists in a list:
 
-```
+```ocaml
 let x = List.exists (fun x -> x = 0) [0; 1; 2] (* x = true *)
 ```
 
 Using partial application of the `(=)` function we could make it shorter:
 
-```
+```ocaml
 let x = List.exists ((=) 0) [0; 1; 2]
 ```
 
@@ -54,7 +54,7 @@ For example, the `List.find : 'a list -> ('a -> bool) -> 'a` function raises `No
 if it fails to find a matching element. This is how we could convert it to a function that returns
 an option type instead and then use its result in pattern matching:
 
-```
+```ocaml
 let find_opt xs f =
   try Some (List.find xs f)
   with Not_found -> None
@@ -70,13 +70,13 @@ The `map : ('a -> 'b) -> 'a list -> 'b list)` function that you are likely alrea
 other languages is also there. It takes a function and a list and applies the function to every element
 of the list:
 
-```
+```ocaml
 let squares = List.map (fun x -> x * x) [1; 2; 3]
 ```
 
 The `List.filter : ('a -> bool) -> 'a list -> 'a list` function should also look familar since it's implemented by many languages:
 
-```
+```ocaml
 let evens = List.filter (fun x -> x mod 2 = 0) [1; 2; 3; 4] (* evens = [2; 4] *)
 ```
 
@@ -85,7 +85,7 @@ it's known as `reduce`. It takes a function, a list, and an initial values, and 
 element and the accumulator. This is how we can write a function that calculates the average value of all elements
 in a list:
 
-```
+```ocaml
 let average xs =
   let sum = List.fold_left (fun x y -> x +. y) 0.0 xs in
   sum /. (float (List.length xs))
@@ -105,13 +105,13 @@ a known position, you may use `List.nth : 'a list -> int -> 'a` function, but re
 Note that it will raise a `Failure` exception
 if list is too short. Elements are numbered from zero. This is an example of a program that will fail:
 
-```
+```ocaml
 let () = Printf.printf "%d\n" @@ List.nth [1; 2; 3] 3
 ```
 
 We could make it safer by handling the exception:
 
-```
+```ocaml
 let () =
   try List.nth [1; 2; 3] 3 |> Printf.printf "%d\n"
   with Failure _ -> print_endline "List is too short"
@@ -121,7 +121,7 @@ Finally, if you are not planning to do anything with results of applying a funct
 you can use the `List.iter : ('a -> unit) -> 'a list -> unit` function. This is how you can print
 all elements of a list with it for example:
 
-```
+```ocaml
 let () =
   List.iter print_endline ["foo"; "bar"; "baz"]
 ```
@@ -144,7 +144,7 @@ The list type is defined as follows:
 
 In OCaml we cannot create our own infix data constructors, but in imaginary syntax it could be written like this:
 
-```
+```ocaml
 type 'a list = [] | 'a :: 'a list
 ``` 
 
@@ -153,7 +153,7 @@ made from a value (head) and another list (tail). The square brackets syntax is 
 any list using the empty list value `[]` and the `::` constructor alone. The following definitions are equivalent:
 
 
-```
+```ocaml
 let xs = []
 
 let ys = [1]
@@ -187,7 +187,7 @@ with a variable name.
 If special syntax for the `::` infix constructor and empty list value `[]` didn't exist in OCaml, we could make an equivalent
 definition:
 
-```
+```ocaml
 type 'a list = Nil | Cons of 'a * 'a list
 ```
 
@@ -237,7 +237,7 @@ Or, formally:
 
 This inductive definition can be easily converted to pattern matching:
 
-```
+```ocaml
 let rec length xs =
   match xs with
     [] -> 0
@@ -251,7 +251,7 @@ It's also easy to see that this implementation is not tail recursive, since the 
 until all inner expressions are evaluated. To make it tail recursive, we could use a variant of structural recursion sometimes called
 _structural recursion with accumulator_:
 
-```
+```ocaml
 let length xs =
   let rec aux ys acc =
     match ys with
@@ -270,7 +270,7 @@ The map function can also be easily reimplemented with pattern matching. There a
 The base case is the empty list, and since it has no elements there is nothing to apply a function to, so we return it unchanged.
 The inductive step is also simple: to calculate `map (x :: xs)` we apply `f` to the head and cons it with `map xs`.
 
-```
+```ocaml
 let rec map f xs =
   match xs with
     [] -> []
@@ -287,7 +287,7 @@ If we limit the discussion to lists sorted in ascending order, our definition wi
 2. A list of one element is sorted.
 3. A list of two or more elements `(x :: y :: ys)` is sorted iff _x < y_ and list `y :: ys` is sorted.
 
-```
+```ocaml
 let rec is_sorted xs =
   match xs with
     [] -> true
@@ -308,7 +308,7 @@ by prepending a new head to existing tail, accumulating processed list element w
 
 Consider this naive attempt to make map tail recursive:
 
-```
+```ocaml
 let rec map f xs acc =
   match xs with
     [] -> acc
@@ -319,7 +319,7 @@ let xs = map (fun x -> x * x) [1; 2; 3] []
 
 The `xs` list is now `[9; 4; 1]`. A correct implementation must reverse the accumulator before returning it:
 
-```
+```ocaml
 let map f xs =
   let rec map_aux f xs acc =
     match xs with

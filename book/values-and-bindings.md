@@ -72,7 +72,7 @@ parentheses or any other special syntax.
 
 This is a hello world program:
 
-```
+```ocaml
 print_endline "hello world"
 ```
 
@@ -95,8 +95,7 @@ print_endline 1
 
 $ ocamlopt -o hello ./hello.ml 
 File "./test.ml", line 1, characters 14-15:
-Error: This expression has type int but an expression was expected of type
-         string
+Error: This expression has type int but an expression was expected of type string
 
 ```
 
@@ -135,7 +134,7 @@ a left and a right hand side.
 An example of a function with `unit -> unit` type is `print_newline` that just prints a line break.
 A program that prints a line break thus can be written like this:
 
-```
+```ocaml
 print_newline ()
 ```
 
@@ -169,7 +168,7 @@ hello world
 
 We could also use two bindings instead of one to demonstrate that `let ... in` constructs can be nested:
 
-```
+```ocaml
 let hello = "hello " in
 let world = "world" in
 print_endline (hello ^ world)
@@ -207,7 +206,7 @@ you need to have an expression evaluated, but don't want to bind its value to an
 
 To create independent top level expressions you can use &ldquo;fake&rdquo; bindings with wildcard patterns:
 
-```
+```ocaml
 let hello = "hello "
 let world = "world"
 
@@ -233,7 +232,7 @@ to have possible type errors caught.
 
 Here is an example of an error that is made invisible by the wildcard pattern:
 
-```
+```ocaml
 let _ = print_endline
 ```
 
@@ -244,14 +243,14 @@ easier to forget one. Since the wildcard pattern completely ignores the value, t
 
 However, if you use the unit pattern, the program will fail to compile because `print_endline` function is not a value of type unit:
 
-```
+```ocaml
 let () = print_endline
 ```
 
 If you have multiple expressions of the `unit` type, you can chain them using semicolons. In OCaml, the semicolon
 is an _expression separator_ rather than a statement terminator, so you will need at least one unit or wildcard binding to use it:
 
-```
+```ocaml
 let greeting = "hello world"
 
 let () = print_string greeting; print_newline ()
@@ -260,7 +259,7 @@ let () = print_string greeting; print_newline ()
 If you try this with expressions of types other than `unit`, the compiler will produce a warning. To suppress the warning,
 you can apply the `ignore` function to your expression, as in:
 
-```
+```ocaml
 let () = ignore 1; print_endline "hello world"
 ```
 
@@ -270,7 +269,7 @@ Finally, you can also use `;;` like in the REPL, but it's a very bad style and s
 
 As you remember, every new binding opens a new scope. We can illustrate it like this:
 
-```
+```ocaml
 (* Scope 0 *)
 
 let hello = "hello " (* Opens scope 1 *)
@@ -287,7 +286,7 @@ let () = print_endline (hello ^ world)
 
 Now let's stop and think what happens if we make two bindings with the same name.
 
-```
+```ocaml
 (* Scope 0 *)
 let hello = "hello"
 
@@ -311,7 +310,7 @@ It is perfectly safe to redefine a binding locally and it will have no effect on
 
 Consider this program:
 
-```
+```ocaml
 (* Scope 0 *)
 let hello = "hello "
 

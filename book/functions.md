@@ -13,7 +13,7 @@ This is the syntax for anonymous functions: `fun <formal parameter> -> <expressi
 
 Let's write a simple program using an anonymous function:
 
-```
+```ocaml
 let a = (fun x -> x * x) 3
 
 let () = print_int a
@@ -28,7 +28,7 @@ In the program it is applied to 3 and the result is bound to `a`, which is later
 Now, before we learn the syntactic sugar for named functions, let's create a named function
 the hard way:
 
-```
+```ocaml
 let square = fun x -> x * x
 
 let a = square 3 (* 9 *)
@@ -48,7 +48,7 @@ contains no other variables. When that function is applied to an argument, `x` w
 with that argument in the `x * x` expression and that expression will be evaluated.
 We can visualize that process like this:
 
-```
+```ocaml
 square 3 =
 (fun x -> x * x) 3 =
 (fun 3 -> 3 * 3) =
@@ -58,7 +58,7 @@ square 3 =
 
 Of course, if we have previously created any bindings, we can refer to them in our functions.
 
-```
+```ocaml
 let two = 2
 
 let plus_two = fun x -> x + two
@@ -70,7 +70,7 @@ let () = print_int number
 
 However, what happens if the name `two` is redefined after the definition of `plus_two`? Let's try and see what happens:
 
-```
+```ocaml
 let two = 2
 
 let plus_two = fun x -> x + two
@@ -93,12 +93,12 @@ you can reuse variable names safely.
 
 We can rewrite the `plus_two` function using a `let ... in` binding instead:
 
-```
+```ocaml
 let plus_two =
   let two = 2 in
   fun x -> x + two
 
-print_int (plus_two 3)
+let () = print_int (plus_two 3)
 ```
 
 Here, the variable `two` doesn't even exist for the rest of the program because it was a local
@@ -119,7 +119,7 @@ function where the first argument is fixed but the second one is free.
 
 Let's write a function for calculating the average of two values.
 
-```
+```ocaml
 let average = fun x -> (fun y -> (x +. y) /. 2.0)
 ```
 
@@ -161,7 +161,7 @@ The type of that function is rather complicated and we will not discuss it right
 its first argument is a format string. Format string syntax is very similar to that of C and all languages
 inspired by its `printf`. The Hello World program could be written:
 
-```
+```ocaml
 let () = Printf.printf "%s\n" "hello world"
 
 ```
@@ -171,7 +171,7 @@ on the format string. For example, in `let f = Printf.printf "%s %d"`, `f` will 
 
 Now let's write a simple program using `Printf.printf` and partial application of it:
 
-```
+```ocaml
 let greet = Printf.printf "Hello %s!\n"
 
 let () = greet "world"
@@ -188,7 +188,7 @@ this kind of errors rarely goes unnoticed and programs fail to compile.
 
 Consider this program:
 
-```
+```ocaml
 let add = fun x -> (fun y -> x + y)
 
 let x = add 3 (* forgot second argument *)
@@ -205,7 +205,7 @@ multiple arguments are involved, so OCaml provides syntactic sugar for it.
 
 Let's rewrite the functions we've already written in a simpler way:
 
-```
+```ocaml
 let plus_two x = x + 2
 
 let average x y = (x +. y) /. 2.0
@@ -221,7 +221,7 @@ including the wildcard or any valid constant. This also applied to the left hand
 
 For example, we can create a function that ignores its argument using the wildcard pattern:
 
-```
+```ocaml
 let always_zero _ = 0
 
 let always_one = fun _ -> 1
@@ -230,7 +230,7 @@ let always_one = fun _ -> 1
 We can also use the `()` constant, which is a constant of type `unit`, as a function argument. Since functions with
 no arguments cannot exist in OCaml, this is the standard for functions used solely for their side effects:
 
-```
+```ocaml
 let print_hello () = print_endline "hello world"
 
 let () = print_hello ()
@@ -246,7 +246,7 @@ in most functional languages operators are just functions that can be used in an
 
 In OCaml, every infix operator can also be used in a prefix form if enclosed in parentheses:
 
-```
+```ocaml
 let a = (+) 2 3
 let b = (/.) 5 2
 let c = (^) "hello " "world"
@@ -254,7 +254,7 @@ let c = (^) "hello " "world"
 
 You can also define your own operators like any other functions using the same parentheses syntax:
 
-```
+```ocaml
 let (^.^) x y = x ^ x ^ y ^ y
 
 let s = "foo" ^.^ "bar" (* foofoobarbar *)
@@ -263,7 +263,7 @@ let s = "foo" ^.^ "bar" (* foofoobarbar *)
 
 You can also define a prefix operator if you use a name that starts with a tilde:
 
-```
+```ocaml
 let (~*) x = x * x
 
 let a = ~* 2 (* 4 *)
@@ -278,7 +278,7 @@ when you import operators from a module. You can find the precedence table in th
 
 OCaml supports named and optional arguments. Named arguments are preceded with the tilde symbol:
 
-```
+```ocaml
 let greet ~greeting ~name = Printf.printf "%s %s!\n" greeting name
 
 let () = greet ~name:"world" ~greeting:"hello"
@@ -289,7 +289,7 @@ are embedded in its type: `greeting:string -> name:string -> unit`.
 Named arguments can be used in any order as long as you specify the labels, but if arguments come
 in the same order as they are defined in the function, you can omit the labels:
 
-```
+```ocaml
 let greet ~greeting ~name = Printf.printf "%s %s!\n" greeting name
 
 let () = greet "hello" "world"
@@ -301,7 +301,7 @@ for example, &ldquo;hi&rdquo;
 This is how we can do it:
 
 
-```
+```ocaml
 let greet ?(greeting="hello") name = Printf.printf "%s %s!\n" greeting name
 
 let () = greet "world" ~greeting:"hi"

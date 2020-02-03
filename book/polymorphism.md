@@ -13,7 +13,7 @@ Essentially, a variable for types—a _type variable_.
 It is easy to see that this function indeed works with arguments of any type and
 behaves the same:
 
-```
+```ocaml
 let hello _ = print_endline "hello world"
 
 let () = hello ()
@@ -90,7 +90,7 @@ Let's examine two combinators from the standard library that can make your life 
 The `@@` operator (and remember, operators are functions) takes a function and some other value and applies the function to that value.
 You can use it to reduce the number of parentheses you need in your expressions. Compare these equivalent expressions:
 
-```
+```ocaml
 let () = print_endline (string_of_int 5)
 
 let () = print_endline @@ string_of_int 5
@@ -98,7 +98,7 @@ let () = print_endline @@ string_of_int 5
 
 If it was not in the standard library, it could be trivially defined as:
 
-```
+```ocaml
 let (@@) f x = f x
 ```
 
@@ -110,20 +110,20 @@ sides too.
 
 Here is an example of an incorrect program:
 
-```
+```ocaml
 let () = print_endline @@ 5
 ```
 
 Another useful combinator is the reverse application combinator written `|>`. It is conceptually similar to the
 application combinator `@@`, but has a different order of arguments: a value on the left and a function on the right. It can be defined as:
 
-```
+```ocaml
 let (|>) x f = f x
 ```
 
 Its type is `'a -> ('a -> 'b) -> 'b`. This is useful if you want to take a value and send it down a computation pipeline, for example:
 
-```
+```ocaml
 let () = 5 |> string_of_int |> print_endline
 ```
 
@@ -133,14 +133,14 @@ and make them much easier to edit.
 Now let's make our own combinator that the standard library doesn't provide: function composition.
 It will take two functions and a value and apply them both to it:
 
-```
+```ocaml
 let (+*) f g x = g (f x)
 ``` 
 
 Its type is `('a -> 'b) -> ('b -> 'c) -> 'a -> 'c`. Since the value is its last argument, we can produce a new
 function using it without mentioning any arguments at all, thanks to partial application:
 
-```
+```ocaml
 let (+*) f g x = f (g x)
 
 let print_int = print_endline +* string_of_int

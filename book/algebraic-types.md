@@ -20,7 +20,7 @@ of a line with itself.
 
 This is how we could define a type of points on a plane:
 
-```
+```ocaml
 type point = float * float
 ```
 
@@ -30,7 +30,7 @@ type `point`, the OCaml compiler will not start referring to any value of type `
 The `*` operator is a _type constructor_ that creates a new product type from two other types, in this case
 a tuple of two floats. You can create tuples of more than two items in the same fashion:
 
-```
+```ocaml
 type point3d = float * float * float
 ```
 
@@ -38,7 +38,7 @@ This is just the type though, and naming product types is not a standard practic
 comma as an item separator, like in many other languages. Note that parentheses around tuples are optional
 and required only when leaving them out will cause ambiguity.
 
-```
+```ocaml
 let zero = 0.0, 0.0
 ```
 
@@ -53,7 +53,7 @@ disjoint union: a union of sets where every element is attached to a tag indicat
 
 The simplest kind of a sum type is used to model finite sets. This is equivalent to enums in C-like languages.
 
-```
+```ocaml
 type chess_piece = Pawn | Knight | Bishop | Rook | Queen | King
 ```
 
@@ -62,7 +62,7 @@ to sum type members. For example, suppose we are writing a geometry program and 
 A circle can be defined by its radius, a square by its side length, and a triangle can be defined by lengths
 of its sides. So our type may look like this:
 
-```
+```ocaml
 type shape = Circle of float | Square of float | Triangle of (float * float * float)
 ```
 
@@ -71,13 +71,13 @@ functions that can produce some value or no value at all, it is called _option_.
 for something in a database can produce a list of results, or not find anything, and it is nice to be able
 to encode the latter case explicitly. The option type can be defined as follows:
 
-```
+```ocaml
 type 'a option = Some of 'a | None
 ```
 
 There is also a type meant for functions that can explicitly signal error conditions:
 
-```
+```ocaml
 type ('a, 'b) result = Ok of 'a | Error of 'b
 ```
 
@@ -105,7 +105,7 @@ internally, they are just sum types.
 
 If special syntax didn't exist for them, they could be defined as:
 
-```
+```ocaml
 type unit = Unit
 
 type bool = True | False
@@ -129,7 +129,7 @@ Let's see how we can use tuple and data constructor patterns in `let`-bindings.
 Some languages have special constructs for multiple assignment.
 In OCaml, you can do the same by using a tuple pattern, so no special construct is needed.
 
-```
+```ocaml
 let a, b = 1, 2 in
 Printf.printf "%d %d\n" a b
 ```
@@ -137,7 +137,7 @@ Printf.printf "%d %d\n" a b
 If you have a function that returns a tuple, and you only want one item of that tuple, you can combine the tuple
 pattern with the wildcard pattern to discard the unwanted part:
 
-```
+```ocaml
 let f x y = x, x + y
 
 let _, x = f 3 2
@@ -153,7 +153,7 @@ which will result in compile time warnings and runtime errors.
 
 Consider this program:
 
-```
+```ocaml
 let x = None
 
 let (Some y) = x
@@ -189,7 +189,7 @@ and we can match on them.
 Let's compare functions that
 determine is given number is zero, written with a conditional expression and pattern matching:
 
-```
+```ocaml
 (* With a conditional *)
 let is_zero n = if n = 0 then true else false
 
@@ -199,7 +199,7 @@ let is_zero' n = match n with 0 -> true | _ -> false
 In multi-line `match` expressions, some people like to add a `|` character before the first case as well, for
 visual uniformity:
 
-```
+```ocaml
 let is_zero n =
   match n with
   | 0 -> true
@@ -208,7 +208,7 @@ let is_zero n =
 
 A function determines if given character is a whitespace character or not can be a more interesting example:
 
-```
+```ocaml
 let is_whitespace c =
   match c with
     ' ' -> true
@@ -220,7 +220,7 @@ let is_whitespace c =
 
 You can see that it's rather repetitive. To avoid repetition, OCaml allows conflating cases:
 
-```
+```ocaml
 let is_whitespace c =
   match c with
     ' ' | '\t' | '\n' | '\r' -> true
@@ -234,7 +234,7 @@ To demonstrate using tuple patterns inside `match` expressions, we will reimplem
 Logical AND is only true when its both arguments are true, otherwise it's false. With a `match` expression
 and a tuple pattern we can express it consicely:
 
-```
+```ocaml
 let (&&) x y =
   match (x, y) with
   | true, true -> true
@@ -249,7 +249,7 @@ Now let's see how we can combine data constructors of sum types and tuples in pa
 Remember the type for geometric shapes that we introduced earlier. This is how we can write
 a function for calculating the area of different shapes:
 
-```
+```ocaml
 type shape = Circle of float | Square of float | Triangle of (float * float * float)
 
 let area s =
@@ -277,7 +277,7 @@ a readability improvement.
 
 Let's rewrite our logical AND function in an overly verbose way for demonstration.
 
-```
+```ocaml
 let (&&) x y =
   match x with
   | true ->
