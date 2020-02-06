@@ -94,7 +94,7 @@ to the value attached to `Some`.
 For ease of use, the bind function is usually aliased to an infix operator, traditionally `>>=`.
 Let's rewrite our example using the `Option.bind`:
 
-```ocaml
+```invalid-ocaml
 let (>>=) = Option.bind
 
 let handle_search_result o =
@@ -111,7 +111,7 @@ let () =
 If we had multiple functions of type `'a -> 'a option`, we could write a much longer pipeline,
 and still have to deal with unwrapping the option type explicitly only at the last step:
 
-```ocaml
+```invalid-ocaml
 let y = x >>= f >>= g >>= h in
 match y with
 | None -> ...
@@ -164,7 +164,7 @@ exception Access_denied
 exception Invalid_value of string
 
 (* Parse error: line, column, error message *)
-exception Parse_error (int * int * string)
+exception Parse_error of (int * int * string)
 ```
 
 ### Raising and catching exceptions
@@ -182,14 +182,15 @@ let (//) x y =
   else raise (Invalid_value "Attempted division by zero")
 ```
 
-Now let's learn how to catch exceptions:
+Now let's learn how to catch exceptions. Instead of inventing our own exception, we will use
+a built-in exception named `Division_by_zero`:
 
 ```ocaml
 let () =
   try
-    let x = 4 // 0 in
+    let x = 4 / 0 in
     Printf.printf "%d\n" x
-  with Invalid_value s -> print_endline s
+  with Division_by_zero -> print_endline "Cannot divide by zero"
 ```
 
 Note that `try ... with` constructs are expressions rather than statements, and can be easily used
@@ -204,7 +205,7 @@ let () = Printf.printf "%d\n" x
 Another implication of the fact that `try ... with` is an expression is that all expressions in the
 `try` and `with` clauses must have the same type. This would cause a type error:
 
-```ocaml
+```invalid-ocaml
 let x = try 4 / 0 with Division_by_zero -> print_endline "Division by zero"
 ```
 
@@ -213,10 +214,10 @@ You can catch multiple exceptions using a syntax similar to that of `match` expr
 ```ocaml
 let () =
   try
-    let x = 4 // 0 in
+    let x = 4 / 0 in
     Printf.printf "%d\n" x
   with
-    Invalid_value s -> print_endline s
+    Failure s -> print_endline s
   | Division_by_zero -> print_endline "Division by zero"
 
 ```
@@ -224,16 +225,16 @@ let () =
 So far our examples assumed that we know all exceptions our functions can possibly raise, or do not want
 to catch any other exceptions, which is not always the case. Since there are no exception hierarchies,
 we cannot catch a generic exception, but we can use the wildcard pattern to catch any possible exception.
-The downside of course is that if an exception comes with an attached value, we cannot destructure
+The downside of course is that if even if an exception comes with an attached value, we cannot destructure
 it and extract the value since the type of that value is not known in advance.
 
 ```ocaml
 let () =
   try
-    let x = 4 // 0 in
+    let x = 4 / 0 in
     Printf.printf "%d\n" x
   with
-    Invalid_value s -> print_endline s
+    Division_by_zero -> print_endline "Cannot divide by zero"
   | _ -> print_endline "Something went wrong"
 
 ```

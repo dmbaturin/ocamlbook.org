@@ -48,7 +48,9 @@ contains no other variables. When that function is applied to an argument, `x` w
 with that argument in the `x * x` expression and that expression will be evaluated.
 We can visualize that process like this:
 
-```ocaml
+```invalid-ocaml
+let square = fun x -> x * x
+
 square 3 =
 (fun x -> x * x) 3 =
 (fun 3 -> 3 * 3) =
@@ -188,7 +190,7 @@ this kind of errors rarely goes unnoticed and programs fail to compile.
 
 Consider this program:
 
-```ocaml
+```invalid-ocaml
 let add = fun x -> (fun y -> x + y)
 
 let x = add 3 (* forgot second argument *)
@@ -248,7 +250,7 @@ In OCaml, every infix operator can also be used in a prefix form if enclosed in 
 
 ```ocaml
 let a = (+) 2 3
-let b = (/.) 5 2
+let b = (/.) 5. 2.
 let c = (^) "hello " "world"
 ```
 

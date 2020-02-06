@@ -243,7 +243,7 @@ easier to forget one. Since the wildcard pattern completely ignores the value, t
 
 However, if you use the unit pattern, the program will fail to compile because `print_endline` function is not a value of type unit:
 
-```ocaml
+```invalid-ocaml
 let () = print_endline
 ```
 
@@ -314,9 +314,10 @@ Consider this program:
 (* Scope 0 *)
 let hello = "hello "
 
-let hello = hello ^ "world" in
-(* Local scope 1 *)
-print_endline hello
+let () =
+  let hello = hello ^ "world" in
+  (* Local scope 1 *)
+  print_endline hello
 
 (* Back to scope 0 *)
 let () = print_endline hello

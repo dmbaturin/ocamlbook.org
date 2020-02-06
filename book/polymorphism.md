@@ -110,7 +110,7 @@ sides too.
 
 Here is an example of an incorrect program:
 
-```ocaml
+```invalid-ocaml
 let () = print_endline @@ 5
 ```
 

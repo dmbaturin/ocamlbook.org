@@ -18,7 +18,7 @@ Let's write an example program that deals with 2d vectors defined by their compo
 ```ocaml
 type vector = { x: float; y: float }
 
-let vec = {x=1; y=1}
+let vec = {x=1.0; y=1.0}
 
 let length v =
   (v.x *. v.x) +. (v.y *. v.y) |> sqrt
@@ -54,6 +54,8 @@ let person = {person with phone="212850A" }
 It's fine to update multiple fields at once as well:
 
 ```ocaml
+type contact = {name: string; phone: string}
+
 let person = {name="Boris"; phone="2128506"}
 
 let person = {person with name="Bob"; phone="212850B" }
@@ -92,7 +94,7 @@ There's a type `'a ref` that is really a record with a single mutable field name
 ```ocaml
 type 'a ref = {mutable contents: 'a}
 
-let ref value = {contents: value}
+let ref value = {contents=value}
 
 let (:=) reference value = reference.contents <- value 
 ```

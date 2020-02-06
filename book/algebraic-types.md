@@ -215,7 +215,7 @@ let is_whitespace c =
   | '\t' -> true
   | '\n' -> true
   | '\r' -> true
-  _ -> false
+  | _ -> false
 ```
 
 You can see that it's rather repetitive. To avoid repetition, OCaml allows conflating cases:

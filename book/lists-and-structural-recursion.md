@@ -144,7 +144,7 @@ The list type is defined as follows:
 
 In OCaml we cannot create our own infix data constructors, but in imaginary syntax it could be written like this:
 
-```ocaml
+```invalid-ocaml
 type 'a list = [] | 'a :: 'a list
 ``` 
 
