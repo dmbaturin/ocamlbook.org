@@ -14,10 +14,15 @@ Everyone is welcome to contribute. Just create a pull request.
 
 ## Building
 
-This book uses [soupault](https://soupault.neocities.org) website generator.
-You'll need the dev version now, some features are not yet in a release.
+You will need:
 
-For converting pages from Markdown to HTML it uses the `cmark` program.
+* [soupault](https://soupault.neocities.org) website generator, version 1.8 or newer.
+* [cmark](https://github.com/commonmark/cmark) for Markdown to HTML conversion
+* [highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) for static syntax highlighting
+* The OCaml compiler for build-time example typechecking
+* GNU Make
+
+Once you have all dependencies, run `make all`, the output will be in `build/`.
 
 ## Reading
 
