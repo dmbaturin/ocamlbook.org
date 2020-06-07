@@ -47,7 +47,7 @@ Both approaches have their advantages and disadvantages. An exception-raising fu
 values of the same type as elements of the list, but forces you to handle exceptions.
 A function of `'a list -> ('a -> bool) -> 'a option` type would be exception-safe, but it would force
 you to unwrap the option type value and handle the case of `None`.
-If you want to stick wit the
+If you want to stick with the
 standard library, you'll need to handle exceptions.
 
 For example, the `List.find : 'a list -> ('a -> bool) -> 'a` function raises `Not_found` exception
@@ -81,7 +81,7 @@ let evens = List.filter (fun x -> x mod 2 = 0) [1; 2; 3; 4] (* evens = [2; 4] *)
 ```
 
 Another commonly used function is `List.fold_left : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a`. In some other languages
-it's known as `reduce`. It takes a function, a list, and an initial values, and applies the function to every list
+it's known as `reduce`. It takes a function, a list, and an initial value, and applies the function to every list
 element and the accumulator. This is how we can write a function that calculates the average value of all elements
 in a list:
 
