@@ -5,7 +5,7 @@ However, a product type with too many fields can easily become unwieldy. It may 
 
 This is where records come in handy. They have named fields, so it's easy to convey the meaning of every fields.
 
-OCaml record are similar to records in Pascal or Ada and to C structs. They can have one or more named fields, and every field can be accessed by name.
+OCaml records are similar to records in Pascal or Ada and to C structs. They can have one or more named fields, and every field can be accessed by name.
 
 Record types cannot be anonymous, they must always be defined before use.
 
