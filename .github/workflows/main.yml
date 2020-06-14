@@ -39,5 +39,5 @@ jobs:
 
     - name: Build the book
       run: |
-        ls -alh
+        mkdir build/
         make all
