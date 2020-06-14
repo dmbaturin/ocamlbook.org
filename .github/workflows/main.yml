@@ -39,5 +39,4 @@ jobs:
 
     - name: Build the book
       run: |
-        mkdir build/
         make all
