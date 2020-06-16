@@ -31,6 +31,8 @@ jobs:
     - name: Install soupault
       env:
         SOUPAULT_VERSION: 1.12.0
+        ARCHIVE: ocaml-book.zip 
+        NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
       run: |
         echo Downloading and unpacking soupault
         wget https://files.baturin.org/software/soupault/$SOUPAULT_VERSION/soupault-$SOUPAULT_VERSION-linux-x86_64.tar.gz
@@ -40,3 +42,9 @@ jobs:
     - name: Build the book
       run: |
         make all
+        zip -r $ARCHIVE build/
+        
+    - name: Deploy to Netlify
+      run: |
+        curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_TOKEN" --data-binary "@$ARCHIVE" https://api.netlify.com/api/v1/sites/ocaml-book.netlify.app/deploys
+
