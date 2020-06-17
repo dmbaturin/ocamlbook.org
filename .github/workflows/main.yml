@@ -42,9 +42,9 @@ jobs:
     - name: Build the book
       run: |
         make all
-        zip -r ${ARCHIVE} build/
+        zip -r ocaml-book.zip build/
         
     - name: Deploy to Netlify
       run: |
-        curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_TOKEN" --data-binary "@${ARCHIVE}" https://api.netlify.com/api/v1/sites/ocaml-book.netlify.app/deploys
+        curl -H "Content-Type: application/zip" -H "Authorization: Bearer $NETLIFY_TOKEN" --data-binary "@ocaml-book.zip" https://api.netlify.com/api/v1/sites/ocaml-book.netlify.app/deploys
 
