@@ -125,7 +125,7 @@ you can make your pipeline much easier to debug and give the user a sensible err
 
 A type `t` with functions `bind : 'a t -> ('a -> 'a t) -> 'a t` and `return : 'a -> 'a t`
 defined for it is known as a _monad_<span class="footnote">For a good introduction, see Philip Wadler's paper
-[Monads for functional programming](http://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf").</span>.
+[Monads for functional programming](http://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf).</span>.
 In our case we use `Some` and `Ok` data constructors
 as &ldquo;virtual&rdquo; `return` functions. Error handling is the simplest use case for the monad pattern, it
 can encapsulate different kinds of complexity: for example, the [Lwt](https://ocsigen.org/lwt/) library uses it for
@@ -138,7 +138,7 @@ style, you still need to learn about them because many standard library function
 
 Some functions exist in both pure and exception-raising variants. For example, apart from `List.find_opt`,
 there's also `List.find : ('a -> bool) -> 'a list -> 'a` function that will raise `Not_found` exception
-if it failes to find anything:
+if it fails to find anything:
 
 ```ocaml
 let () = 
