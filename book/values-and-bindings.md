@@ -28,29 +28,29 @@ program evaluates `1` to `1`, which produces no side effects, and exits, since i
  integer literal `1` is a constant of type `int`. Let's look at some other kinds of constants we can use:
 
 <table>
-  <th>
+  <tr>
     <td>Type</td>
     <td>Examples</td>
-  </th>
+  </tr>
   <tr>
-    <td>`bool`</td>
-    <td>`true`, `false`</td>
+    <td><code>bool</code></td>
+    <td><code>true</code>, <code>false</code></td>
   </tr>
   <tr>
     <td>int</td>
-    <td>`1`, `10`, `0xCAFE` (hexadecimal), `0o3` (octal), `0b101` (binary)</td>
+    <td><code>1</code>, <code>-10</code>, <code>0xCAFE</code> (hexadecimal), <code>0o3</code> (octal), <code>0b101</code> (binary)</td>
   </tr>
   <tr>
-    <td>`float`</td>
-    <td>`1.`, `3.5`, `0xFF.9B`</td>
+    <td><code>float</code></td>
+    <td><code>1.</code>, <code>3.5</code>, <code>0xFF.9B</code></td>
   </tr>
   <tr>
-    <td>`char`</td>
-    <td>`'c'`, `'\n'`</td>
+    <td><code>char</code></td>
+    <td><code>'c'</code>, <code>'\n'</code></td>
   </tr>
   <tr>
-    <td>`string`</td>
-    <td>`"hello world\n"`, `"foobar"`</td>
+    <td><code>string</code></td>
+    <td><code>"hello world\n"</code>, <code>"foobar"</code></td>
   </tr>
 </table>
 
