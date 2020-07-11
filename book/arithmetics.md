@@ -26,7 +26,7 @@ let c = (float 4) +. 2. (* good, integer is converted to float *)
 
 Bad examples:
 
-```
+```invalid-ocaml
 let d = 4.0 + 2.0 (* bad, using integer addition with floats *)
 let e = 4 +. 2 (* bad using floating point addition with integers *)
 let f = 4.0 + 2 (* bad, mixing floats with integers *)

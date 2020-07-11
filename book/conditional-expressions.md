@@ -13,7 +13,7 @@ right hand side of the operator must be of the same type. Trying to compare valu
 will cause a compilation error. The type of those functions is an interesting question, for now we will only say that all equality and
 comparison expressions evaluate to `bool`. 
 
-```
+```invalid-ocaml
 2 = 2 (* good *)
 4 <> 3 (* good *)
 

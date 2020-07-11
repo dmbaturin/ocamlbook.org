@@ -29,7 +29,7 @@ is _n * (n-1)!_.
 
 This is what it will look like:
 
-```
+```ocaml
 let rec factorial n =
   if n = 0 then 1
   else n * (factorial (n-1))
@@ -43,7 +43,7 @@ Remember that in OCaml, functions are values,
 and function bindings are not different from variable bindings. Let's see what would
 happen if `rec` was the default. Consider this program:
 
-```
+```ocaml
 let x = 1
 
 let x = x + 10
@@ -59,7 +59,7 @@ The `rec` keyword allows you to control this behaviour. The issue is even more a
 if you want to redefine a function. Suppose you want to redefine the `print_string`
 function to behave like `print_endline`.
 
-```
+```ocaml
 let print_string s = print_string s; print_newline ()
 ```
 
@@ -99,7 +99,7 @@ Such definitions follow this pattern: `let rec <name1> = <expr> and <name2> = <e
 
 Let's demonstrate it using a popular contrived example:
 
-```
+```ocaml
 let rec even x =
   if x = 0 then true
   else odd (x - 1)
@@ -120,7 +120,7 @@ will translate recursive functions to loops, if you follow certain guidelines.
 Before we learn the guidelines, let's examine the root cause of memory consumption issues in recursive functions.
 Let's re-examine our original factorial definition:
 
-```
+```ocaml
 let rec factorial n =
   if n = 0 then 1
   else n * (factorial (n-1))
@@ -133,7 +133,7 @@ a stack overflow.
 
 Now consider this program:
 
-```
+```ocaml
 let rec loop () = print_endline "I'm a recursive function"; loop ()
 
 let _ = loop ()
@@ -158,7 +158,7 @@ it's a very common functional programming technique.
 The key is to rewrite the function body so that everything the next function call will need
 is passed in the accumulator argument.
 
-```
+```ocaml
 let rec factorial acc n =
   if n = 0 then acc
   else factorial (acc * n) (n - 1)
@@ -177,7 +177,7 @@ the user needs to know the correct initial value of `acc` to use it successfully
 For this reason tail recursive functions are usually implemented as nested functions to give
 them convenient interface and hide the added complexity:
 
-```
+```ocaml
 let factorial n =
   let rec aux acc n =
     if n = 0 then acc
@@ -188,7 +188,7 @@ let factorial n =
 Assuming _f_ is a recursive function, while _g_, _h_, _i_, and _j_ are some other functions,
 you can use these three forms as blueprints for your tail-recursive functions:
 
-```
+```invalid-ocaml
 let rec f acc x = f (g acc x) (h x)
 
 let rec f x =
@@ -230,7 +230,7 @@ gcd n 0 = n, gcd n m = gcd m, (n mod m). Do it in both naive and tail recursive 
 
 3. Consider this function for multiplying integer numbers: 
 
-```
+```ocaml
 let rec mul n m =
   if m = 1 then n
   else n + (mul n (m-1))
