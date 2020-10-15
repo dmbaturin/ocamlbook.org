@@ -1,0 +1,13 @@
+[
+  {"id": "preface", "title": "Preface"},
+  {"id": "values-and-bindings", "title": "Values and bindings"},
+  {"id": "arithmetics", "title": "Arithmetics"},
+  {"id": "functions", "title": "Functions"},
+  {"id": "conditional-expressions", "title": "Booleans and conditional expressions"},
+  {"id": "recursive-functions", "title": "Recursive functions"},
+  {"id": "polymorphism", "title": "Higher order functions and parametric polymorphism"},
+  {"id": "algebraic-types", "title": "Algebraic data types and pattern matching"},
+  {"id": "error-handling", "title": "Error handling"},
+  {"id": "lists-and-structural-recursion", "title": "Linked lists and structural recursion"},
+  {"id": "records-and-references", "title": "Records and references"}
+]
