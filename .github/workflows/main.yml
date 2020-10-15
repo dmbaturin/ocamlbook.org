@@ -30,7 +30,7 @@ jobs:
   
     - name: Install soupault
       env:
-        SOUPAULT_VERSION: 1.13.0
+        SOUPAULT_VERSION: 2.0.0
       run: |
         echo Downloading and unpacking soupault
         wget https://files.baturin.org/software/soupault/$SOUPAULT_VERSION/soupault-$SOUPAULT_VERSION-linux-x86_64.tar.gz
