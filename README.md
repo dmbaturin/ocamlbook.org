@@ -1,5 +1,6 @@
 # ocaml-book
-A free culture OCaml textbook
+
+A free (as in freedom) OCaml textbook.
 
 ## Contributing
 
@@ -16,7 +17,7 @@ Everyone is welcome to contribute. Just create a pull request.
 
 You will need:
 
-* [soupault](https://soupault.neocities.org) website generator, version 1.8 or newer.
+* [soupault](https://soupault.neocities.org) website generator, version 2.0.0 or newer.
 * [cmark](https://github.com/commonmark/cmark) for Markdown to HTML conversion.
 * [highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) for static syntax highlighting
 * The OCaml compiler for build-time example typechecking
@@ -36,5 +37,4 @@ If you are building on a system with an older cmark version, remove `--unsafe`.
 
 ## Reading
 
-A draft more or less in sync with the repo lives at https://ocaml-book.baturin.org
-I should setup a CI for it eventually.
+A live version is available at https://ocamlbook.org
