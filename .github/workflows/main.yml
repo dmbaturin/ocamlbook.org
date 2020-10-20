@@ -31,11 +31,10 @@ jobs:
     - name: Install soupault
       env:
         SOUPAULT_VERSION: 2.0.0
-        SOUPAULT_URL: https://github.com/dmbaturin/soupault/releases/download/$SOUPAULT_VERSION/soupault-$SOUPAULT_VERSION-linux-x86_64.tar.gz
       run: |
         echo Downloading and unpacking soupault
-        wget $SOUPAULT_URL
-        tar xvf $
+        wget https://github.com/dmbaturin/soupault/releases/download/$SOUPAULT_VERSION/soupault-$SOUPAULT_VERSION-linux-x86_64.tar.gz
+        tar xvf soupault-$SOUPAULT_VERSION-linux-x86_64.tar.gz
         sudo mv -v ./soupault-$SOUPAULT_VERSION-linux-x86_64/soupault /usr/bin/
 
     - name: Build the book
