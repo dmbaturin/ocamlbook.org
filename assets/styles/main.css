@@ -36,6 +36,13 @@ code { background-color: #eaeaea }
 
 #book-title { font-weight: bold; font-size: 200%; }
 
+#dedication
+{
+    text-align: right;
+    font-style: italic;
+    width: 100%;
+}
+
 /* Navigation */
 div.chapters-navigation
 {
