@@ -30,7 +30,7 @@ jobs:
   
     - name: Install soupault
       env:
-        SOUPAULT_VERSION: 2.3.0
+        SOUPAULT_VERSION: 2.5.0
       run: |
         echo Downloading and unpacking soupault
         wget https://github.com/dmbaturin/soupault/releases/download/$SOUPAULT_VERSION/soupault-$SOUPAULT_VERSION-linux-x86_64.tar.gz
