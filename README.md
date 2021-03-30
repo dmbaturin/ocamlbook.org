@@ -17,7 +17,7 @@ Everyone is welcome to contribute. Just create a pull request.
 
 You will need:
 
-* [soupault](https://soupault.neocities.org) website generator, version 2.0.0 or newer
+* [soupault](https://soupault.app) website generator, version 2.0.0 or newer
 * [cmark](https://github.com/commonmark/cmark) for Markdown to HTML conversion
 * [highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) for static syntax highlighting
 * The OCaml compiler for build-time example typechecking
