@@ -2,7 +2,7 @@
 
 <div id="dedication">To Betty Bourbaki.</div>
 
-This is a work in progress introductory book on OCaml.
+This is a work in progress introductory book on the [OCaml](https://ocaml.org) programming language.
 
 Already available chapters:
 
@@ -11,7 +11,7 @@ Already available chapters:
   </ol>
 </div>
 
-# Contributing
+## Contributing
 
 The git repo is at [github.com/dmbaturin/ocaml-book](https://github.com/dmbaturin/ocaml-book).
 
