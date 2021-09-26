@@ -47,7 +47,7 @@
   footnote_link_class = "footnote"
 
 [widgets.table-of-contents]
-  exclude_page = "index.html"
+  exclude_page = "index.md"
 
   widget = "toc"
   selector = "h1"
@@ -96,7 +96,7 @@
   action = "replace_content"
 
 [widgets.chapters-index]
-  page = "index.html"
+  page = "index.md"
   widget = "chapters-index"
   data_file = "chapters.json"
 

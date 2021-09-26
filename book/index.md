@@ -2,46 +2,43 @@
 
 <div id="dedication">To Betty Bourbaki.</div>
 
-<p>This is a work in progress introductory book on OCaml.</p>
-<p>Already available chapters:</p>
+This is a work in progress introductory book on OCaml.
+
+Already available chapters:
+
 <div id="chapters">
   <ol class="plain" id="chapters-index">
   </ol>
 </div>
 
-<h2>Contributing</h2>
-<p>The git repo is at <a href="https://github.com/dmbaturin/ocaml-book">github.com/dmbaturin/ocaml-book</a>.</p>
-<p>
-What sets this book apart is that it's under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC-BY-SA</a>,
+# Contributing
+
+The git repo is at [github.com/dmbaturin/ocaml-book](https://github.com/dmbaturin/ocaml-book).
+
+What sets this book apart is that it's under [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/),
 a free, strong copyleft license similar to the GNU GPL in spirit.
-</p>
-<p>
+
 It belongs to the community and everyone can freely distribute and modify it. Even if the original authors no longer
 have time to maintain it, the community can keep it up to date and distribute updated versions.
-</p>
-<p>
+
 Right now the book is obviously incomplete, but together we can complete it faster than I can do it alone.
 Every contribution counts! Beta reading and editing are important. If you want to write a whole chapter,
 that's even better.
-</p>
-<p>
+
 Just like with free software, the copyright stays shared between all contributors.
-</p>
 
-<h2>Principles behind the book</h2>
+## Principles behind the book
 
-<ol>
-  <li>Build it bottom up, never introduce a concept before it can be fully explained.</li>
-  <li>Stick with the standard library.</li>
-  <li>When third-party libraries are used, mention it prominently and use fully qualified names.</li>
-  <li>Don't make it REPL-centric.</li>
-  <li>Do not mention foxes or chunky bacon.</li>
-</ol>
+1. Build it bottom up, never introduce a concept before it can be fully explained.
+2. Stick with the standard library.
+3. When third-party libraries are used, mention it prominently and use fully qualified names.
+4. Don't make it REPL-centric.
+5. Do not mention foxes or chunky bacon.
 
-<h2>Chapters to be written</h2>
-<p>
+## Chapters to be written
+
 If you want to help writing any of those, you are welcome!
-</p>
+
 <dl>
   <dt>Strings and buffers</dt>
   <dd>Immutable strings vs mutables <code>bytes</code>. Operations on strings. Operations on buffers.</dd>
