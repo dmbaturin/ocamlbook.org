@@ -1,0 +1,9 @@
+http://ocamlbook.com/* https://ocamlbook.org/:splat 301!
+http://www.ocamlbook.com/* https://ocamlbook.org/:splat 301!
+https://ocamlbook.com/* https://ocamlbook.org/:splat 301!
+https://www.ocamlbook.com/* https://ocamlbook.org/:splat 301!
+
+http://ocamlbook.net/* https://ocamlbook.org/:splat 301!
+http://www.ocamlbook.net/* https://ocamlbook.org/:splat 301!
+https://ocamlbook.net/* https://ocamlbook.org/:splat 301!
+https://www.ocamlbook.net/* https://ocamlbook.org/:splat 301!
