@@ -6,12 +6,8 @@ SOUPAULT := soupault
 site:
 	$(SOUPAULT)
 
-.PHONY: assets
-assets:
-	cp -r assets/* $(BUILD_DIR)
-
 .PHONY: all
-all: site assets
+all: site
 
 .PHONY: clean
 clean:
