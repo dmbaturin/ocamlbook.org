@@ -4,13 +4,6 @@
 
 This is a work in progress introductory book on the [OCaml](https://ocaml.org) programming language.
 
-Already available chapters:
-
-<div id="chapters">
-  <ol class="plain" id="chapters-index">
-  </ol>
-</div>
-
 ## Contributing
 
 The git repo is at [github.com/dmbaturin/ocaml-book](https://github.com/dmbaturin/ocaml-book).
