@@ -16,7 +16,7 @@
   site_dir = "book/"
 
   # Where in the template the page content is inserted
-  default_content_selector = "#content"
+  default_content_selector = "main"
 
   default_template_file = "templates/main.html"
 
@@ -123,7 +123,8 @@
   index_selector = "div#chapters-index"
 
   index_template = '''
-    <ul>
+    <ul class="toc">
+      <li> <a href="/">About this book</a> </li>
       {% for e in entries %}
       <li> <a href="{{e.url}}">{{e.title}}</a> </li>
       {% endfor %}
