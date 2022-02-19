@@ -3,8 +3,11 @@
 ## Global settings
 
 [settings]
+  soupault_version = "4.0.0"
+
   strict = true
   verbose = true
+  debug = true
 
   # Where generated files go
   build_dir = "build"
@@ -28,6 +31,54 @@
 ## Preprocessors
 [preprocessors]
   md = "cmark --unsafe --smart"
+
+
+[hooks.pre-process]
+  lua_source = '''
+    target_file_name = Sys.basename(target_file)
+
+    target_page_dir = Sys.basename(target_dir)
+    target_page_parent_dir = Sys.dirname(target_dir)
+
+    target_page_dir = Regex.replace(target_page_dir, "^\\d+_", "")
+
+    target_dir = Sys.join_path(target_page_parent_dir, target_page_dir)
+    target_file = Sys.join_path(target_dir, target_file_name)
+
+    Log.debug(format("Target file name set to \"%s\"", target_file))
+'''
+
+[hooks.post-index]
+  lua_source = '''
+    Log.debug("Extracting chapter number")
+    page_file_name = Sys.basename(page_file)
+    res = Regex.find_all(page_file_name, "^(\\d+)")
+
+    if res then
+      chapter_number = res[1]
+    else
+      chapter_number = 0
+    end
+
+    index_fields["chapter_number"] = format("%s", chapter_number)
+    Log.debug(JSON.pretty_print(index_fields))
+'''
+
+[index]
+  index = true
+
+  # Make the index data available even to content pages,
+  # at cost of making a reduced first pass to extract that data
+  # before the "real" build
+  index_first = true
+
+  dump_json = "index.json"
+  sort_by = "chapter_number"
+  sort_type = "numeric"
+  sort_descending = false
+
+[index.fields]
+  title = { selector = ["#title", "h1"] }
 
 ## Widgets
 
@@ -66,6 +117,19 @@
 
   use_heading_slug = true
 
+[widgets.insert-chapters-index]
+  widget = "chapters-index"
+
+  index_selector = "div#chapters-index"
+
+  index_template = '''
+    <ul>
+      {% for e in entries %}
+      <li> <a href="{{e.url}}">{{e.title}}</a> </li>
+      {% endfor %}
+    </ul>
+'''
+
 [widgets.cleanup-table-of-contents]
   widget = "delete_element"
   after  = "table-of-contents"
@@ -94,14 +158,3 @@
   selector = '.language-invalid-ocaml'
   command = 'highlight -O html -f --syntax=ocaml'
   action = "replace_content"
-
-[widgets.chapters-index]
-  page = "index.md"
-  widget = "chapters-index"
-  data_file = "chapters.json"
-
-[widgets.chapter-navigation]
-  exclude_page = "index.html"
-
-  widget = "chapters-navigation"
-  data_file = "chapters.json"

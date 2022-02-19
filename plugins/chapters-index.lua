@@ -1,12 +1,11 @@
-chapters = JSON.from_string(Sys.read_file(config["data_file"]))
+tmpl = config["index_template"]
+selector = config["index_selector"]
 
-container = HTML.select_one(page, "#chapters-index")
+env = {}
+env["entries"] = site_index
 
-local n = 1
-local count = size(chapters)
-while (n <= count) do
-  li = HTML.parse(String.render_template("<li><a href=\"/{{id}}/\">{{title}}</a></li>", chapters[n]))
-  HTML.append_child(container, li)
+rendered_index = HTML.parse(String.render_template(tmpl, env))
 
-  n = n + 1
-end
+index_container = HTML.select_one(page, selector)
+
+HTML.append_child(index_container, rendered_index)
