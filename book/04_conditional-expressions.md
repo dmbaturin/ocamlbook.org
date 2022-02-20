@@ -1,6 +1,6 @@
 # Boolean values and conditional expressions
 
-We already know that `true` and `false` are constants of the type `bool`.
+We already know that `true` and `false` are constants of type `bool`.
 Let's learn how to use them.
 
 ## Equality and comparison operators
@@ -8,10 +8,9 @@ Let's learn how to use them.
 OCaml provides the following equality and comparison operators: `=` (equal), `<>` (not equal),
 and the obvious `<`, `>`, `<=`, `>=`.
 
-Unlike arithmetic operators, they do work with values of any type, but the values on the left and
-right hand side of the operator must be of the same type. Trying to compare values of different types
-will cause a compilation error. The type of those functions is an interesting question, for now we will only say that all equality and
-comparison expressions evaluate to `bool`. 
+Unlike arithmetic operators, they do work with values of any type, but those values must be of the same type.
+Trying to compare values of different types will cause a compilation error. The type of those functions is an interesting question,
+for now we will only say that all equality and comparison expressions evaluate to `bool`. 
 
 ```invalid-ocaml
 2 = 2 (* good *)
@@ -27,7 +26,7 @@ comparison expressions evaluate to `bool`.
 
 ## Conditional expressions
 
-The syntax of the conditional expression is `if <cond> then <expr> else <expr>`.
+The syntax of conditional expressions is `if <cond> then <expr> else <expr>`.
 They are exactly expressions rather than statements, similar to the `<cond> ? <expr> : <expr>`
 construct in the C language family.
 
@@ -57,7 +56,7 @@ Note that parentheses around the condition are optional and were added for reada
 ## No implicit conversion to `bool`
 
 You should remember that there is no implicit conversion to `bool` for any values.
-The `<cond>` expression must be a `bool`.
+The `<cond>` expression must evaluate to `bool`.
 
 None of these conditional expressions are valid:
 
