@@ -18,6 +18,10 @@
   # Where in the template the page content is inserted
   default_content_selector = "main"
 
+  # There's a div for footnotes insite <main>,
+  # so we want to insert the content before it
+  default_content_action = "prepend_child"
+
   default_template_file = "templates/main.html"
 
   # Page considered the section index
