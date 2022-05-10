@@ -85,6 +85,8 @@ hr
 
 a { color: var(--link-color); }
 
+a.footnote { text-decoration: none; }
+
 pre
 {
   background-color: var(--pre-bg-color);
