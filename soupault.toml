@@ -105,6 +105,8 @@
 # Removes the <div> meant for footnotes if there are no footnotes in the chapter
 [widgets.footnotes-container-cleanup]
   widget = "footnotes-cleanup"
+  after = "footnotes"
+
   footnote_link_selector = "a.footnote"
   footnotes_container_selector = "div#footnotes"
 
