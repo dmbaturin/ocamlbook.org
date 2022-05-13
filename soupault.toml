@@ -3,11 +3,14 @@
 ## Global settings
 
 [settings]
+  # Require soupault 4.0.0 or later
   soupault_version = "4.0.0"
 
+  # Fail on page processing errors
   strict = true
+
   verbose = true
-  debug = true
+  debug = false
 
   # Where generated files go
   build_dir = "build"
@@ -18,7 +21,7 @@
   # Where in the template the page content is inserted
   default_content_selector = "main"
 
-  # There's a div for footnotes insite <main>,
+  # There's a div for footnotes inside <main>,
   # so we want to insert the content before it
   default_content_action = "prepend_child"
 
@@ -27,16 +30,18 @@
   # Page considered the section index
   index_page = "index"
 
-  # Leave *.html files unchanged for now.
   page_file_extensions = ["html", "md"]
 
   doctype = "<!DOCTYPE html>"
 
 ## Preprocessors
 [preprocessors]
+  # Run *.md files through cmark to convert them to HTML
+  # before further processing
   md = "cmark --unsafe --smart"
 
-
+# This hook removes chapter numbers from output file names,
+# so that book/00_preface.md becomes /preface
 [hooks.pre-process]
   lua_source = '''
     target_file_name = Sys.basename(target_file)
@@ -52,6 +57,8 @@
     Log.debug(format("Target file name set to \"%s\"", target_file))
 '''
 
+# This hook extracts chapter numbers from source file names
+# and adds them to page metadata
 [hooks.post-index]
   lua_source = '''
     Log.debug("Extracting chapter number")
@@ -74,9 +81,10 @@
   # Make the index data available even to content pages,
   # at cost of making a reduced first pass to extract that data
   # before the "real" build
+  #
+  # This is to allow every page to generate a sidebar with all chapters
   index_first = true
 
-  dump_json = "index.json"
   sort_by = "chapter_number"
   sort_type = "numeric"
   sort_descending = false
@@ -130,6 +138,13 @@
 
   use_heading_slug = true
 
+[widgets.cleanup-table-of-contents]
+  widget = "delete_element"
+  after  = "table-of-contents"
+
+  selector = "div#toc"
+  only_if_empty = true
+
 [widgets.insert-chapters-index]
   widget = "chapters-index"
 
@@ -144,19 +159,18 @@
     </ul>
 '''
 
-[widgets.cleanup-table-of-contents]
-  widget = "delete_element"
-  after  = "table-of-contents"
-
-  selector = "div#toc"
-  only_if_empty = true
-
+# Runs OCaml code snippets through compiler's type-checking phase
+# to make the build fail if a snippet is syntactically incorrect or ill-typed
 [widgets.ocaml-compile]
   widget = "preprocess_element"
   selector = '.language-ocaml'
+
+  # Unfortunately, ocamlc doesn't support reading from stdin,
+  # so we have to create temporary files.
+  # This approach may be better to replace with a dedicated plugin
+  # that will also clean up temporary files immediately after use...
   command = 'cat > /tmp/code_sample_$PPID.ml && ocamlc -stop-after typing /tmp/code_sample_$PPID.ml'
   action = 'ignore_output'
-  
  
 # Runs the content of <* class="language-*"> elements through a syntax highlighter
 [widgets.highlight-ocaml]
@@ -166,6 +180,8 @@
   command = 'highlight -O html -f --syntax=ocaml'
   action = "replace_content"
 
+# Some snippets are intentionally invalid to demonstrate typical programming errors
+# They should be exempt from compiler checks 
 [widgets.highlight-bad-ocaml]
   after = "ocaml-compile"
   widget = "preprocess_element"
