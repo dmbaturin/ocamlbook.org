@@ -27,7 +27,7 @@ jobs:
         echo Installing build dependencies
         sudo apt-get update
         sudo apt-get -y install ocaml-nox cmark highlight make
-  
+
     - name: Install soupault
       env:
         SOUPAULT_VERSION: 4.0.0-beta1
@@ -41,7 +41,7 @@ jobs:
       run: |
         make all
         zip -r ocaml-book.zip build/
-        
+
     - name: Deploy to Netlify
       env:
         NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
