@@ -272,23 +272,69 @@ That's the advantage of exceptions: you don't need to deal with unwrapping anyth
 them, you can just let them pass and crash the program. It may be even better than the result type for dealing with
 unexpected errors, since it allows you to find out where exactly in the program it happened.
 
-<div class="info">
-By default only the exception type is shown, but you can get an exception trace with line numbers by running a program
-with `OCAMLRUNPARAM=b` environment variable.
-</div>
-
-The raise function has type `exn -> 'a`. This is unusual because the type `'a` doesn't appear in the left-hand side
-of the arrow. It's a function from the type `exn` to any other type.
+The `raise` function has type `exn -> 'a`. This is unusual because the type variable `'a` doesn't appear in the left-hand side
+of the type. It's a function from the type `exn` to any other type.
 
 The `exit : int -> 'a` function has similar type. It takes an exit code value and terminates the program with it.
 
-The key to understanding this is not thinking what return type a function has, but rather what type can be
-substituted for the type variable without compromising type safety. Since `raise` and `exit` abandon the current
-computation, and no other function receives their return value, there is no chance anything may get a value
-of an unexpected type from it. This is why it has a free type variable in the right hand side—it isn't
-_runtime safe_, but type safety is unaffected by exceptions.
+The key to understanding this is to stop thinking about return values and think about types that can be substituted for
+the `'a` type variable without compromising type safety.
 
-Generalizations of exceptions that can be reflected in function types and automatically checked is an area
-of active research.
+Since `raise` and `exit` abandon the current computation, they can be substituted for anything
+because nothing can possibly get a value of an unexpected type from them — they produce no value at all.
+This is why it has a free type variable in the right hand side — it isn't _runtime safe_, but type safety is unaffected by exceptions.
 
+Generalizations of exceptions that can be reflected in function types and automatically checked is an area of active research.
+
+### Enabling exception tracing
+
+By default, if an exception occurs, OCaml programs only show its type and associated value.
+
+Consider the following program that always fails with an exception.
+
+```ocaml
+let _ = raise (Failure "Error!")
+```
+
+If you compile it with default options and run it, you will see the following output:
+
+```
+$ ocamlopt -o failure ./failure.ml
+
+$ ./failure
+Fatal error: exception Failure("Error!")
+```
+
+However, if you enable debug information in the compiler options (`-g`), it's possible
+to get an exception trace with the call stack and line numbers.
+
+Even for programs compiled with debug information, exception tracing is still disabled
+by default to avoid performance overhead. One way to enable it is to set the `OCAMLRUNPARAM`
+environment variable to `b` (for "backtrace").
+
+```
+$ ocamlopt -g -o failure ./failure.ml
+
+$ OCAMLRUNPARAM=b ./failure
+Fatal error: exception Failure("Error!")
+Raised at Failure in file "./failure.ml", line 1, characters 8-32
+```
+
+It's also possible to enable exception tracing from within a program by calling `Printexc.record_backtrace true`.
+
+```ocaml
+let () = Printexc.record_backtrace true
+
+let _ = raise (Failure "Error!")
+```
+
+If the program above is compiled with debug information, it will always produce a trace.
+
+```
+$ ocamlopt -g -o failure ./failure.ml
+
+$ ./failure
+Fatal error: exception Failure("Error!")
+Raised at Failure in file "./failure.ml", line 3, characters 8-32
+```
 
