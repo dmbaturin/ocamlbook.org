@@ -74,7 +74,7 @@ of the list:
 let squares = List.map (fun x -> x * x) [1; 2; 3]
 ```
 
-The `List.filter : ('a -> bool) -> 'a list -> 'a list` function should also look familar since it's implemented by many languages:
+The `List.filter : ('a -> bool) -> 'a list -> 'a list` function should also look familiar since it's implemented by many languages:
 
 ```ocaml
 let evens = List.filter (fun x -> x mod 2 = 0) [1; 2; 3; 4] (* evens = [2; 4] *)
@@ -128,7 +128,7 @@ let () =
 
 ## Defining the list type
 
-Many data structures, including linked lists, can be defined _inductively.
+Many data structures, including linked lists, can be defined _inductively_.
 
 An _inductive definition_ consists of two parts: a _base case_ that defines the least possible element,
 and an _inductive step_ that defines how to make larger structures from it.
@@ -215,7 +215,7 @@ The generalization of mathematical induction for data structures is known as _st
 
 Every inductive definition of a function can be naturally converted to a recursive algorithm, assuming we know how to destructure
 a value into its parts. For the factorial function, we had to substitute destructuring a natural number _n_ into
-_m + 1_ with substracting one from it.
+_m + 1_ with subtracting one from it.
 
 Data structures defined as sum types can be directly destructured using pattern matching, which makes them easy to use with recursive functions.
 
