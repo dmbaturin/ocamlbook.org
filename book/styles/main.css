@@ -96,7 +96,6 @@ pre
 
 code, kbd {
   color: var(--command-color);
-  font-family: monospace;
 }
 
 /* ToC hardly needs list bullets. */
@@ -120,8 +119,9 @@ body
     width: 100%;
 }
 
-/* For some reason on most system the default monospace font looks smaller. */
-pre, code, kbd { font-size: 110%; }
+/* For some reason on most system the default monospace font looks smaller.
+   This brings them back to normal. */
+pre, code, kbd { font-family: monospace, monospace; }
 
 @supports (hyphens: auto) {
   main {
