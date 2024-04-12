@@ -1,13 +1,13 @@
 # Algebraic data types and pattern matching
 
-So far we've only seen typed that can encode single values, such as integers, strings, or functions.
+So far we've only seen types that can encode single values, such as integers, strings, or functions.
 Practical programming, however, is nearly impossible without composite types. Tuples, lists, trees, and
 other datastructures are staples of software development.
 
 The most common building blocks of composite types in OCaml are so called _algebraic data types_ (ADTs).
 While OCaml has records, objects, and arrays too, the most common built-in types are ADTs.
 
-Algebaric types are closely connected with pattern matching and explaining them has something of a chicken and egg
+Algebraic types are closely connected with pattern matching and explaining them has something of a chicken and egg
 problem: it is impossible to explain pattern matching without explaining algebraic types, but algebraic types
 make little sense until you know how to use them in pattern matching. We will try to break the circle by learning
 how to define them by example, and then learning how to actually use them.
@@ -47,7 +47,7 @@ let zero = 0.0, 0.0
 Sum types generalize what is often known as enum, union, or variant record. They are also rather harder to explain
 than product types because they have no direct equivalent in most languages. 
 
-Mathemarically, a sum type is a
+Mathematically, a sum type is a
 disjoint union: a union of sets where every element is attached to a tag indicating which set it came from.
 
 
@@ -91,7 +91,7 @@ The anatomy of a sum type definition is shown in the following picture:
 
 <img src="/images/ocaml_type_definition.png"/>
 
-The name of the type is referred to as _type constructor_, because it can used to create new monomorphic types
+The name of the type is referred to as _type constructor_, because it can be used to create new monomorphic types
 with different type variables, such as `int option` or `string option`, or `(int * string) result` and
 `(float * unit) result`.
 
@@ -232,7 +232,7 @@ more interesting patterns that allow us to destructure complex values.
 
 To demonstrate using tuple patterns inside `match` expressions, we will reimplement the logical AND function.
 Logical AND is only true when its both arguments are true, otherwise it's false. With a `match` expression
-and a tuple pattern we can express it consicely:
+and a tuple pattern we can express it concisely:
 
 ```ocaml
 let (&&) x y =
@@ -267,7 +267,7 @@ let () = Printf.printf "%f\n" @@ area (Triangle (3.0, 4.0, 5.0))
 
 In the logical AND function, we managed to get away with a single `match` expression,
 but there are cases when nesting them is unavoidable. The issue you should be aware of is that,
-since indentation in OCaml is not significant, nested matches need explicit delimeters.
+since indentation in OCaml is not significant, nested matches need explicit delimiters.
 
 Like any other expressions, you can wrap them in parentheses, but there is also syntactic sugar
 in form of `begin` and `end` keywords. They are syntactically equivalent to parentheses, to the point
@@ -316,7 +316,7 @@ Define a sum type that models a card deck.
 Using a `match` expression, write a function `is_vowel : char -> char` that checks if given
 character is a vowel.
 
-Write a function with deliberately non-exsaustive pattern matching and cause it to fail with `Match_failure` exception.
+Write a function with deliberately non-exhaustive pattern matching and cause it to fail with `Match_failure` exception.
 
 Write a logical XOR function using a `match` expression and no more than three cases.
 
