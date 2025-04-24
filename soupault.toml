@@ -3,8 +3,10 @@
 ## Global settings
 
 [settings]
-  # Require soupault 4.0.0 or later
-  soupault_version = "4.0.0"
+  # Require soupault 5.0.0 or later
+  # for index data available to all pages
+  # and built-in Markdown support
+  soupault_version = "5.0.0"
 
   # Fail on page processing errors
   strict = true
@@ -30,15 +32,9 @@
   # Page considered the section index
   index_page = "index"
 
-  page_file_extensions = ["html", "md"]
+  markdown_extensions = ["md"]
 
   doctype = "<!DOCTYPE html>"
-
-## Preprocessors
-[preprocessors]
-  # Run *.md files through cmark to convert them to HTML
-  # before further processing
-  md = "cmark --unsafe --smart"
 
 # This hook removes chapter numbers from output file names,
 # so that book/00_preface.md becomes /preface
@@ -58,7 +54,8 @@
 '''
 
 # This hook extracts chapter numbers from source file names
-# and adds them to page metadata
+# and adds them to page metadata,
+# so that the list of chapters can be sorted by the chapter number
 [hooks.post-index]
   lua_source = '''
     Log.debug("Extracting chapter number")
@@ -78,19 +75,26 @@
 [index]
   index = true
 
-  # Make the index data available even to content pages,
-  # at cost of making a reduced first pass to extract that data
-  # before the "real" build
-  #
-  # This is to allow every page to generate a sidebar with all chapters
-  index_first = true
+[index.fields]
+  title = { selector = ["#title", "h1"] }
+
+# Adds a sidebar with the list of chapters
+# to every page
+[index.views.toc-sidebar]
+  index_selector = "div#chapters-index"
 
   sort_by = "chapter_number"
   sort_type = "numeric"
   sort_descending = false
 
-[index.fields]
-  title = { selector = ["#title", "h1"] }
+  index_template = '''
+    <ul class="toc">
+      <li> <a href="/">About this book</a> </li>
+      {% for e in entries %}
+      <li> <a href="{{e.url}}">{{e.title}}</a> </li>
+      {% endfor %}
+    </ul>
+'''
 
 ## Widgets
 
@@ -144,20 +148,6 @@
 
   selector = "div#toc"
   only_if_empty = true
-
-[widgets.insert-chapters-index]
-  widget = "chapters-index"
-
-  index_selector = "div#chapters-index"
-
-  index_template = '''
-    <ul class="toc">
-      <li> <a href="/">About this book</a> </li>
-      {% for e in entries %}
-      <li> <a href="{{e.url}}">{{e.title}}</a> </li>
-      {% endfor %}
-    </ul>
-'''
 
 # Runs OCaml code snippets through compiler's type-checking phase
 # to make the build fail if a snippet is syntactically incorrect or ill-typed
